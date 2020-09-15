@@ -1,21 +1,41 @@
 ﻿@page "/"
+@inject HttpClient http
 @using ChartJs.Blazor.Charts
 @using ChartJs.Blazor.ChartJS.PieChart
 @using ChartJs.Blazor.ChartJS.Common.Properties
 @using ChartJs.Blazor.Util
+@using BTCStats.Data.Models
 
+<table>
+    <thead>
+        <tr>
+            <th>Price</th>
+        </tr>
+     </thead>
+    <tbody>
+
+    </tbody>
+</table>
 
 <ChartJsPieChart @ref="_pieChartJs" Config="@_config" Width="600" Height="300" />
 
 @code{
+
+    List<PriceModel> price = new List<PriceModel>();
+
     //API
     //https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2020-09-05
 
     private PieConfig _config;
     private ChartJsPieChart _pieChartJs;
 
-    protected override void OnInitialized()
+
+    
+
+    protected async override void OnInitialized()
     {
+        price = await http.GetJsonAsync<List<PriceModel>>("https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2020-09-05");
+
         _config = new PieConfig
         {
             Options = new PieOptions
