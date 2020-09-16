@@ -18,17 +18,13 @@
                         <th>USD</th>
                         <th>BTC</th>
                         <th>ETH</th>
-                        <th>VET</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var price in currentPrice)
                     {
                         <tr class="justify-content-center">
-                            <td>@price.USD</td>
-                            <td>@price.BTC</td>
-                            <td>@price.ETH</td>
-                            <td>@price.VET</td>
+                            <td>@price.Market_data</td>
                         </tr>
                     }
                 </tbody>
@@ -40,11 +36,9 @@
     </div>
 </div>
 
-
 @code{
 
-    List<CurrentPriceModel> currentPrice = new List<CurrentPriceModel>();
-
+    List<PriceHistoryModel> currentPrice = new List<PriceHistoryModel>();
 
     //API
     //https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2020-09-05
@@ -59,7 +53,7 @@
         if (httpResponse.IsSuccessStatusCode)
         {
             PriceHistoryModel responseData = JsonConvert.DeserializeObject<PriceHistoryModel>(await httpResponse.Content.ReadAsStringAsync());
-            currentPrice = responseData.Current_price;
+            currentPrice = responseData.Market_data;
             StateHasChanged();
         }
     }

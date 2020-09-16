@@ -9,15 +9,12 @@ namespace BTCStats.Models
     public class CurrentPriceModel
     {
         [JsonProperty("usd")]
-        public string USD { get; set; }
+        public double USD { get; set; }
 
         [JsonProperty("btc")]
-        public string BTC { get; set; }
-
-        [JsonProperty("vet")]
-        public string VET { get; set; }
+        public double BTC { get; set; }
 
         [JsonProperty("eth")]
-        public string ETH { get; set; }
+        public double ETH { get; set; }
     }
 }
