@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BTCStats.Data;
 using System.Net.Http;
+using BTCStats.Services;
 
 namespace BTCStats
 {
@@ -30,7 +31,10 @@ namespace BTCStats
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<HttpClient>();
+            services.AddScoped<HttpClient>(s =>
+            {
+                return new HttpClient { BaseAddress = new Uri(@"https://api.coingecko.com/") };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
