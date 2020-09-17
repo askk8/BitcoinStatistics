@@ -10,7 +10,7 @@
 @using Data
 <div class="container-fluid">
     <div class="row" style="margin:25px;">
-        @if (currentPrice != null)
+        @*@if (currentPrice != null)
         {
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
@@ -24,38 +24,53 @@
                     @foreach (var price in currentPrice)
                     {
                         <tr class="justify-content-center">
-                            <td>@price.Market_data</td>
+                            <td>@price</td>
+                            <td>@price</td>
+                            <td>@price</td>
                         </tr>
                     }
                 </tbody>
             </table>
-        }
+        }*@
     </div>
-    <div class="row" style="margin:10px;margin-bottom:50px;">
+    @*<div class="row" style="margin:10px;margin-bottom:50px;">
         <div class="col"><button class="btn btn-info" @onclick="GetPrice">Get Price</button></div>
-    </div>
+    </div>*@
 </div>
 
 @code{
 
-    List<PriceHistoryModel> currentPrice = new List<PriceHistoryModel>();
+    public PriceHistoryModel prices { get; set;}
 
+    public List<PriceHistoryModel> priceList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        prices = new PriceHistoryModel();
+
+        priceList = new List<PriceHistoryModel>();
+        priceList = await client.GetJsonAsync<List<PriceHistoryModel>>("https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020");
+
+
+
+    }
     //API
     //https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2020-09-05
 
     //https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020
 
-    private async void GetPrice()
-    {
-        var apiName = "api/v3/coins/ethereum/history?date=16-09-2020";
-        var httpResponse = await client.GetAsync(apiName);
+    //private async void GetPrice()
+    //{
+    //    var apiName = "https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020";
+    //    var httpResponse = await client.GetAsync(apiName);
 
-        if (httpResponse.IsSuccessStatusCode)
-        {
-            PriceHistoryModel responseData = JsonConvert.DeserializeObject<PriceHistoryModel>(await httpResponse.Content.ReadAsStringAsync());
-            currentPrice = responseData.Market_data;
-            StateHasChanged();
-        }
-    }
+    //    if (httpResponse.IsSuccessStatusCode)
+    //    {
+    //        PriceHistoryModel responseData = JsonConvert.DeserializeObject<PriceHistoryModel>(await httpResponse.Content.ReadAsStringAsync());
+    //        currentPrice = responseData.Market_data;
+    //        StateHasChanged();
+    //    }
+    //}
 
 }

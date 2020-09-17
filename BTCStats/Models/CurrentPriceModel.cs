@@ -8,13 +8,8 @@ namespace BTCStats.Models
 {
     public class CurrentPriceModel
     {
-        [JsonProperty("usd")]
         public double USD { get; set; }
-
-        [JsonProperty("btc")]
         public double BTC { get; set; }
-
-        [JsonProperty("eth")]
         public double ETH { get; set; }
     }
 }

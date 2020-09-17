@@ -31,10 +31,11 @@ namespace BTCStats
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddScoped<HttpClient>(s =>
-            {
-                return new HttpClient { BaseAddress = new Uri(@"https://api.coingecko.com/") };
-            });
+            services.AddSingleton<HttpClient>();
+            //services.AddScoped<HttpClient>(s =>
+            //{
+            //    return new HttpClient { BaseAddress = new Uri(@"https://api.coingecko.com/") };
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
