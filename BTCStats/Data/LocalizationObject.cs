@@ -8,7 +8,7 @@ namespace BTCStats.Data
 {
     public class LocalizationObject
     {
-
+        [JsonProperty("en")]
         public string EN { get; set; }
         [JsonProperty("de")]
         public string DE { get; set; }

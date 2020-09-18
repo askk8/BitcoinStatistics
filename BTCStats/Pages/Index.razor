@@ -46,11 +46,12 @@
     List<ApiResponse> Users = new List<ApiResponse>();
     private async void GetUser()
     {
-        var apiName = "api/v3/coins/bitcoin/history?date=16-09-2020";
+        var apiName = "api/v3/coins/ethereum/history?date=16-09-2020";
         var httpResponse = await client.GetAsync(apiName);
+        string jsonstring = JsonConvert.SerializeObject(await httpResponse.Content.ReadAsStringAsync());
         if (httpResponse.IsSuccessStatusCode)
         {
-            ApiResponse responseData = JsonConvert.DeserializeObject<ApiResponse>(await httpResponse.Content.ReadAsStringAsync());
+            ApiResponse responseData = JsonConvert.DeserializeObject<ApiResponse>(jsonstring);
             //Users = responseData;
             StateHasChanged();
         }
