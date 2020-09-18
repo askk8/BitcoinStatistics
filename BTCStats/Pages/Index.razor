@@ -1,75 +1,63 @@
 ﻿@page "/"
 @inject HttpClient client
-@using ChartJs.Blazor.Charts
-@using ChartJs.Blazor.ChartJS.PieChart
-@using ChartJs.Blazor.ChartJS.Common.Properties
-@using ChartJs.Blazor.Util
-@using BTCStats.Models
-
 @using Newtonsoft.Json
 @using Data
 <div class="container-fluid">
+    <div class="row justify-content-center" style="margin-bottom:50px">
+        <h3 class="text-center">Calling REST-APIs</h3>
+    </div>
     <div class="row" style="margin:25px;">
-        @*@if (currentPrice != null)
+        <strong>Get Operation </strong><hr />
+        @if (Users != null)
         {
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th>USD</th>
-                        <th>BTC</th>
-                        <th>ETH</th>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Avatar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var price in currentPrice)
+                    @foreach (var user in Users)
                     {
                         <tr class="justify-content-center">
-                            <td>@price</td>
-                            <td>@price</td>
-                            <td>@price</td>
+                            <td>@user.Name</td>
+
                         </tr>
                     }
                 </tbody>
             </table>
-        }*@
+        }
+        @if (!Users.Any())
+        {
+            <div class="justify-content-center">
+                <h5>No records to show</h5>
+            </div>
+        }
     </div>
-    @*<div class="row" style="margin:10px;margin-bottom:50px;">
-        <div class="col"><button class="btn btn-info" @onclick="GetPrice">Get Price</button></div>
-    </div>*@
+    <div class="row" style="margin:10px;margin-bottom:50px;">
+        <div class="col"><button class="btn btn-info" @onclick="GetUser">Get Users</button></div>
+    </div>
 </div>
-
-@code{
-
-    public PriceHistoryModel prices { get; set;}
-
-    public List<PriceHistoryModel> priceList { get; set; }
-
-    protected override async Task OnInitializedAsync()
+@code {
+    List<ApiResponse> Users = new List<ApiResponse>();
+    private async void GetUser()
     {
-
-        prices = new PriceHistoryModel();
-
-        priceList = new List<PriceHistoryModel>();
-        priceList = await client.GetJsonAsync<List<PriceHistoryModel>>("https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020");
-
-
-
-    //API
-    //https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2020-09-05
-
-    //https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020
-
-    //private async void GetPrice()
-    //{
-    //    var apiName = "https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020";
-    //    var httpResponse = await client.GetAsync(apiName);
-
-    //    if (httpResponse.IsSuccessStatusCode)
-    //    {
-    //        PriceHistoryModel responseData = JsonConvert.DeserializeObject<PriceHistoryModel>(await httpResponse.Content.ReadAsStringAsync());
-    //        currentPrice = responseData.Market_data;
-    //        StateHasChanged();
-    //    }
-    //}
-
+        var apiName = "api/v3/coins/bitcoin/history?date=16-09-2020";
+        var httpResponse = await client.GetAsync(apiName);
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            ApiResponse responseData = JsonConvert.DeserializeObject<ApiResponse>(await httpResponse.Content.ReadAsStringAsync());
+            //Users = responseData;
+            StateHasChanged();
+        }
+    }
+    bool ShowUpdateDeleteForm = true;
+    private void ShowHideDeleteUserForm()
+    {
+        ShowUpdateDeleteForm = !ShowUpdateDeleteForm;
+    }
 }
