@@ -1,4 +1,5 @@
-﻿using BTCStats.Data.Models;
+﻿using BTCStats.Data;
+using BTCStats.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace BTCStats.Services
 {
     public interface IPriceService
     {
-        Task<IEnumerable<PriceModel>> GetPrices();
+        Task<IEnumerable<ApiResponse>> GetPrices();
     }
 }

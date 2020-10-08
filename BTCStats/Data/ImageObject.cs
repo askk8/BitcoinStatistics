@@ -8,9 +8,11 @@ namespace BTCStats.Data
 {
     public class ImageObject
     {
-        [JsonProperty("thumb")]
-        public string Thumb { get; set; }
-        [JsonProperty("small")]
-        public string Small { get; set; }
+        [JsonProperty("image")]
+        public List<string> image { get; set; }
+        [JsonProperty("image.thumb")]
+        public string thumb { get; set; }
+        [JsonProperty("image.small")]
+        public string small { get; set; }
     }
 }

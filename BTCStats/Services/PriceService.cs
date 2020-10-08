@@ -1,4 +1,5 @@
-﻿using BTCStats.Data.Models;
+﻿using BTCStats.Data;
+using BTCStats.Data.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace BTCStats.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<PriceModel>> GetPrices()
+        public async Task<IEnumerable<ApiResponse>> GetPrices()
         {
-            return await httpClient.GetJsonAsync<PriceModel[]>("bpi/historical/close.json?start=2020-08-01&end=2020-09-16");
+            return await httpClient.GetJsonAsync<ApiResponse[]>("api/v3/coins/ethereum/history?date=16-09-2020");
         }
     }
 }

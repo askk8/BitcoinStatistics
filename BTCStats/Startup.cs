@@ -31,9 +31,9 @@ namespace BTCStats
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddScoped<HttpClient>(s =>
+            services.AddHttpClient<IPriceService, PriceService>(client =>
             {
-                return new HttpClient { BaseAddress = new Uri(@"https://api.coingecko.com/") };
+                client.BaseAddress = new Uri("https://api.coingecko.com/");
             });
         }
 
