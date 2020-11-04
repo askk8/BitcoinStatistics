@@ -1,60 +1,7 @@
 ﻿@page "/"
-@inject HttpClient client
-@using Newtonsoft.Json
-@using Data
-@using System
-@using System.Collections.Generic
-@using System.Linq
-@inject BTCStats.Services.IPriceService PriceService
 
-<div class="container-fluid">
-    <div class="row justify-content-center" style="margin-bottom:50px">
-        <h3 class="text-center">Calling REST-APIs</h3>
-    </div>
-    <div class="row" style="margin:25px;">
-        <strong>Get Operation </strong><hr />
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Avatar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="justify-content-center">
-                    <td>blabla</td>
-                </tr>
 
-            </tbody>
-        </table>
-    </div>
-    <div class="row" style="margin:10px;margin-bottom:50px;">
-        <div class="col"><button class="btn btn-info" @onclick="GetUser">Get Users</button></div>
-    </div>
-</div>
 @code {
 
-    private dynamic barChartSelectedCountries { get; set; }
 
-    List<string> names = new List<string>();
-    List<ApiResponse> Users = new List<ApiResponse>();
-
-    private async void GetUser()
-    {
-        //var apiName = "api/v3/coins/ethereum/history?date=16-09-2020";
-
-        var httpResponse = await client.GetAsync("https://api.coingecko.com/api/v3/coins/ethereum/history?date=16-09-2020");
-
-        var result = JsonConvert.DeserializeObject(await httpResponse.Content.ReadAsStringAsync());
-
-        ApiResponse User = await client.GetJsonAsync<ApiResponse>("https://api.coingecko.com/api/v3/coins/ethereum/history?date=16-09-2020");
-
-        //Users = deserializeResponse;
-
-        //ApiResponse result = JsonConvert.DeserializeObject<ApiResponse>(await httpResponse.Content.ReadAsStringAsync());
-    }
 }
-

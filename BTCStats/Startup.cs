@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BTCStats.Data;
 using System.Net.Http;
-using BTCStats.Services;
 
 namespace BTCStats
 {
@@ -31,10 +30,6 @@ namespace BTCStats
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddHttpClient<IPriceService, PriceService>(client =>
-            {
-                client.BaseAddress = new Uri("https://api.coingecko.com/");
-            });
         }
 
         //Api https://api.coingecko.com/api/v3/coins/bitcoin/history?date=16-09-2020
